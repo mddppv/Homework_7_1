@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context=".ui.MainActivity">
+
+    <TextView
+        android:id="@+id/tvMyHome"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/background"
+        android:elevation="4dp"
+        android:gravity="center"
+        android:text="@string/my_home"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/background"
+        android:elevation="4dp"
+        app:tabIndicatorAnimationMode="linear"
+        app:tabIndicatorColor="@color/blue"
+        app:tabIndicatorFullWidth="true"
+        app:tabRippleColor="@color/gray"
+        app:tabTextColor="@color/black"
+        app:tabUnboundedRipple="false">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/camera" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/doors" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
