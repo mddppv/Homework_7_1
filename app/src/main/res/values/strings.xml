@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">Homework_7_1</string>
     <string name="my_home">My home</string>
-    <string name="camera">Camera</string>
+    <string name="cameras">Cameras</string>
     <string name="doors">Doors</string>
     <string name="lounge">Lounge</string>
     <string name="camera_number">Camera 0</string>
     <string name="online">Online</string>
     <string name="homephone">Homephone</string>
+    <string name="room_number">Room 0</string>
 </resources>

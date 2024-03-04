@@ -1,10 +1,11 @@
-package com.example.homework_7_1.ui
+package com.example.homework_7_1.presentation.main
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.homework_7_1.databinding.ActivityMainBinding
-import com.example.homework_7_1.ui.cam.CamScreenFragment
-import com.example.homework_7_1.ui.door.DoorScreenFragment
+import com.example.homework_7_1.presentation.cam.CamScreenFragment
+import com.example.homework_7_1.presentation.door.DoorScreenFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val adapter = ViewPagerAdapter(supportFragmentManager)
-        adapter.addFragment(CamScreenFragment(), "Camera")
+        adapter.addFragment(CamScreenFragment(), "Cameras")
         adapter.addFragment(DoorScreenFragment(), "Doors")
 
         binding.viewPager.adapter = adapter

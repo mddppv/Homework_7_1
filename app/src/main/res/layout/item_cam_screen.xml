@@ -16,14 +16,14 @@
             android:id="@+id/ivCam"
             android:layout_width="match_parent"
             android:layout_height="192dp"
-            android:layout_gravity="top"
             android:background="@color/gray"
             android:scaleType="centerCrop" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvCam"
@@ -31,6 +31,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:text="@string/camera_number"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvRoom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:text="@string/room_number"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 

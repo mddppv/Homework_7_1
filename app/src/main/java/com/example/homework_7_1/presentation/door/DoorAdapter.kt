@@ -1,18 +1,30 @@
-package com.example.homework_7_1.ui.door
+package com.example.homework_7_1.presentation.door
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.homework_7_1.data.remote.model.DoorModel
 import com.example.homework_7_1.databinding.ItemDoorScreenBinding
-import com.example.homework_7_1.model.DoorModel
 import com.example.homework_7_1.util.ItemClickListener
 import com.example.homework_7_1.util.gone
 import com.example.homework_7_1.util.visible
 
 class DoorAdapter(
-    private val dataList: List<DoorModel>,
-    private val clickListener: ItemClickListener
+    private var dataList: List<DoorModel.Data>, private val clickListener: ItemClickListener
 ) : RecyclerView.Adapter<DoorAdapter.ViewHolder>() {
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateData(newData: List<DoorModel.Data>) {
+        dataList = newData
+        notifyDataSetChanged()
+    }
+
+    fun toggleVisibility(position: Int) {
+        dataList[position].visible = !dataList[position].visible
+        notifyItemChanged(position)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemDoorScreenBinding.inflate(
@@ -29,18 +41,12 @@ class DoorAdapter(
 
     inner class ViewHolder(private val binding: ItemDoorScreenBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(doorModel: DoorModel, clickListener: ItemClickListener) {
+        fun bind(door: DoorModel.Data, clickListener: ItemClickListener) {
             with(binding) {
-                ivDoorImage.setImageResource(doorModel.doorImage)
-                tvDoorTitle.text = doorModel.doorTitle
-                tvDoorStatus.text = doorModel.doorStatus
-
-                if (doorModel.isVisible) {
-                    ivDoorImage.visible()
-                } else {
-                    ivDoorImage.gone()
-                }
+                if (door.visible) ivImage.visible() else ivImage.gone()
+                Glide.with(itemView).load(door.snapshot).into(ivImage)
+                tvTitle.text = door.name
+                tvStatus.text = door.room
 
                 itemView.setOnClickListener {
                     clickListener.onItemClicked(adapterPosition)

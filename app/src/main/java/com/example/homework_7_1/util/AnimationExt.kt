@@ -11,8 +11,5 @@ fun View.visible() {
 }
 
 fun View.gone() {
-    val animation = AlphaAnimation(1f, 0f)
-    animation.duration = 300
-    this.startAnimation(animation)
     this.visibility = View.GONE
 }

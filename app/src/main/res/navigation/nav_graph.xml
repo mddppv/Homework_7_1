@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/camScreenFragment"
-        android:name="com.example.homework_7_1.ui.cam.CamScreenFragment"
+        android:name="com.example.homework_7_1.presentation.cam.CamScreenFragment"
         android:label="fragment_cam_screen"
         tools:layout="@layout/fragment_cam_screen" />
 
     <fragment
         android:id="@+id/doorScreenFragment"
-        android:name="com.example.homework_7_1.ui.door.DoorScreenFragment"
+        android:name="com.example.homework_7_1.presentation.door.DoorScreenFragment"
         android:label="fragment_door_screen"
         tools:layout="@layout/fragment_door_screen" />
 
