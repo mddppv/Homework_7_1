@@ -12,11 +12,12 @@ import com.example.homework_7_1.data.remote.model.DoorModel
 import com.example.homework_7_1.data.remote.retrofit.RetrofitClient
 import com.example.homework_7_1.data.remote.retrofit.RetrofitService
 import com.example.homework_7_1.databinding.FragmentDoorScreenBinding
-import com.example.homework_7_1.util.App.Companion.database
+import com.example.homework_7_1.app.App.Companion.database
 import com.example.homework_7_1.util.ItemClickListener
 import com.example.homework_7_1.util.gone
 import com.example.homework_7_1.util.showToast
 import com.example.homework_7_1.util.visible
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -24,7 +25,9 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class DoorScreenFragment : Fragment(), ItemClickListener {
 
     private val binding: FragmentDoorScreenBinding by lazy {
@@ -36,9 +39,9 @@ class DoorScreenFragment : Fragment(), ItemClickListener {
     private val retrofitService: RetrofitService by lazy {
         RetrofitClient.retrofitClient.create(RetrofitService::class.java)
     }
-    private val appDao: AppDao by lazy {
-        database.appDao()
-    }
+
+    @Inject
+    lateinit var appDao: AppDao
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?

@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.homework_7_1.data.local.dao.AppDao
@@ -13,10 +12,11 @@ import com.example.homework_7_1.data.remote.model.CameraModel
 import com.example.homework_7_1.data.remote.retrofit.RetrofitClient
 import com.example.homework_7_1.data.remote.retrofit.RetrofitService
 import com.example.homework_7_1.databinding.FragmentCamScreenBinding
-import com.example.homework_7_1.util.App.Companion.database
+import com.example.homework_7_1.app.App.Companion.database
 import com.example.homework_7_1.util.gone
 import com.example.homework_7_1.util.showToast
 import com.example.homework_7_1.util.visible
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -24,7 +24,9 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class CamScreenFragment : Fragment() {
 
     private val binding: FragmentCamScreenBinding by lazy {
@@ -36,9 +38,9 @@ class CamScreenFragment : Fragment() {
     private val retrofitService: RetrofitService by lazy {
         RetrofitClient.retrofitClient.create(RetrofitService::class.java)
     }
-    private val appDao: AppDao by lazy {
-        database.appDao()
-    }
+
+    @Inject
+    lateinit var appDao: AppDao
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?

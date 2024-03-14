@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.homework_7_1.databinding.ActivityMainBinding
 import com.example.homework_7_1.presentation.cam.CamScreenFragment
 import com.example.homework_7_1.presentation.door.DoorScreenFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

@@ -1,14 +1,12 @@
-package com.example.homework_7_1.util
+package com.example.homework_7_1.app
 
 import android.app.Application
 import androidx.room.Room
 import com.example.homework_7_1.data.local.db.AppDatabase
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class App : Application() {
-
-    companion object {
-        lateinit var database: AppDatabase
-    }
 
     override fun onCreate() {
         super.onCreate()
@@ -16,5 +14,9 @@ class App : Application() {
             applicationContext,
             AppDatabase::class.java, "app-database"
         ).build()
+    }
+
+    companion object {
+        lateinit var database: AppDatabase
     }
 }
