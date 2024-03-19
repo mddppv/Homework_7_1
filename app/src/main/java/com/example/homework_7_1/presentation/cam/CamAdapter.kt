@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.homework_7_1.R
 import com.example.homework_7_1.data.remote.model.CameraModel
 import com.example.homework_7_1.databinding.ItemCamScreenBinding
 
@@ -32,11 +33,26 @@ class CamAdapter(private var dataList: List<CameraModel.Data.Camera>) :
 
     inner class ViewHolder(private val binding: ItemCamScreenBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(camera: CameraModel.Data.Camera) {
             with(binding) {
-                Glide.with(itemView).load(camera.snapshot).into(ivCam)
+                Glide.with(itemView).load(R.drawable.room).into(ivCam)
                 tvCam.text = camera.name
                 tvRoom.text = camera.room
+                setFavIcon(camera.favorites)
+
+                ivStar.setOnClickListener {
+                    camera.favorites = !camera.favorites
+                    setFavIcon(camera.favorites)
+                }
+            }
+        }
+
+        private fun setFavIcon(favorite: Boolean) {
+            if (favorite) {
+                binding.ivStar.setImageResource(R.drawable.star)
+            } else {
+                binding.ivStar.setImageResource(R.drawable.star_border)
             }
         }
     }

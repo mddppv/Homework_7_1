@@ -15,6 +15,20 @@
         android:id="@+id/doorScreenFragment"
         android:name="com.example.homework_7_1.presentation.door.DoorScreenFragment"
         android:label="fragment_door_screen"
-        tools:layout="@layout/fragment_door_screen" />
+        tools:layout="@layout/fragment_door_screen" >
+        <action
+            android:id="@+id/action_doorScreenFragment_to_doorEditFragment"
+            app:destination="@id/doorEditFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/doorEditFragment"
+        android:name="com.example.homework_7_1.presentation.door.edit.DoorEditFragment"
+        android:label="fragment_door_edit"
+        tools:layout="@layout/fragment_door_edit" >
+        <action
+            android:id="@+id/action_doorEditFragment_to_doorScreenFragment"
+            app:destination="@id/doorScreenFragment" />
+    </fragment>
 
 </navigation>

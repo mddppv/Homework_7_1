@@ -15,7 +15,7 @@ data class CameraModel(
         val room: List<String>
     ) {
         data class Camera(
-            val favorites: Boolean,
+            var favorites: Boolean,
             val id: Int,
             val name: String,
             val rec: Boolean,

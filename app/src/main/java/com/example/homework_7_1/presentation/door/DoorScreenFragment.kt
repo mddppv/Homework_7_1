@@ -7,17 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.example.homework_7_1.R
+import com.example.homework_7_1.app.App.Companion.database
 import com.example.homework_7_1.data.local.dao.AppDao
 import com.example.homework_7_1.data.remote.model.DoorModel
 import com.example.homework_7_1.data.remote.retrofit.RetrofitClient
 import com.example.homework_7_1.data.remote.retrofit.RetrofitService
 import com.example.homework_7_1.databinding.FragmentDoorScreenBinding
-import com.example.homework_7_1.app.App.Companion.database
 import com.example.homework_7_1.util.ItemClickListener
 import com.example.homework_7_1.util.gone
 import com.example.homework_7_1.util.showToast
 import com.example.homework_7_1.util.visible
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -25,9 +26,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
-@AndroidEntryPoint
 class DoorScreenFragment : Fragment(), ItemClickListener {
 
     private val binding: FragmentDoorScreenBinding by lazy {
@@ -39,9 +38,9 @@ class DoorScreenFragment : Fragment(), ItemClickListener {
     private val retrofitService: RetrofitService by lazy {
         RetrofitClient.retrofitClient.create(RetrofitService::class.java)
     }
-
-    @Inject
-    lateinit var appDao: AppDao
+    private val appDao: AppDao by lazy {
+        database.appDao()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -52,7 +51,8 @@ class DoorScreenFragment : Fragment(), ItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rvDoor.adapter = adapter
-
+        adapter.setSwipeListener(this)
+        adapter.swipeManager(binding.rvDoor)
         showLoading()
         dataFromServer()
     }
@@ -110,5 +110,29 @@ class DoorScreenFragment : Fragment(), ItemClickListener {
 
     override fun onItemClicked(position: Int) {
         adapter.toggleVisibility(position)
+    }
+
+    override fun onEditClicked(position: Int) {
+        findNavController().navigate(R.id.doorEditFragment)
+    }
+
+    override fun onDeleteClicked(position: Int) {
+        lifecycleScope.launch {
+            val doorData = adapter.getItemAt(position)
+            val door = DoorModel(success = true, data = listOf(doorData))
+            withContext(Dispatchers.IO) {
+                appDao.deleteDoor(door)
+            }
+            adapter.removeItem(position)
+            requireContext().showToast("Door deleted")
+        }
+    }
+
+    override fun onFavoriteClicked(position: Int) {
+        lifecycleScope.launch {
+            val doorData = adapter.getItemAt(position)
+            doorData.favorites = !doorData.favorites
+            adapter.notifyItemChanged(position)
+        }
     }
 }

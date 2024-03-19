@@ -11,7 +11,7 @@ data class DoorModel(
     val data: List<Data>
 ) {
     data class Data(
-        val favorites: Boolean,
+        var favorites: Boolean,
         val id: Int,
         val name: String,
         val room: String,

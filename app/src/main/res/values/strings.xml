@@ -8,4 +8,12 @@
     <string name="online">Online</string>
     <string name="homephone">Homephone</string>
     <string name="room_number">Room 0</string>
+    <string name="edit">Edit</string>
+    <string name="favorite">Favorite</string>
+    <string name="delete">Delete</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="subscriptions">Subscriptions</string>
+    <string name="name">Name</string>
+    <string name="save">Save</string>
 </resources>

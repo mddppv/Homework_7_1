@@ -1,14 +1,14 @@
 package com.example.homework_7_1.presentation.main
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import com.example.homework_7_1.R
 import com.example.homework_7_1.databinding.ActivityMainBinding
 import com.example.homework_7_1.presentation.cam.CamScreenFragment
 import com.example.homework_7_1.presentation.door.DoorScreenFragment
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

@@ -6,11 +6,10 @@
     android:layout_marginTop="16dp"
     app:cardCornerRadius="12dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/ivImage"
@@ -18,12 +17,26 @@
             android:layout_height="192dp"
             android:background="@color/gray"
             android:scaleType="centerCrop"
-            android:visibility="gone" />
+            android:src="@drawable/room"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivStar"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/star_border"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/ivImage"
+            app:layout_constraintTop_toTopOf="@id/ivImage"
+            app:tint="@color/yellow" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:gravity="center">
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/ivImage">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -60,8 +73,53 @@
                 android:src="@drawable/ic_lock"
                 app:tint="@color/blue" />
 
+
+            <LinearLayout
+                android:id="@+id/llPanel"
+                android:layout_width="96dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/tvEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvFav"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:gravity="center"
+                    android:text="@string/favorite"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvDelete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:gravity="center"
+                    android:text="@string/delete"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
