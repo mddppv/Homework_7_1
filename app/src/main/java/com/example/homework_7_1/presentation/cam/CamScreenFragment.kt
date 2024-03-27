@@ -13,13 +13,13 @@ import com.example.homework_7_1.data.remote.model.CameraModel
 import com.example.homework_7_1.data.remote.retrofit.RetrofitClient
 import com.example.homework_7_1.data.remote.retrofit.RetrofitService
 import com.example.homework_7_1.databinding.FragmentCamScreenBinding
+import com.example.homework_7_1.domain.repository.CamRepositoryFuncs
+import com.example.homework_7_1.domain.repository.CameraRepository
 import com.example.homework_7_1.util.gone
 import com.example.homework_7_1.util.showToast
 import com.example.homework_7_1.util.visible
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,6 +38,7 @@ class CamScreenFragment : Fragment() {
     private val appDao: AppDao by lazy {
         database.appDao()
     }
+    private lateinit var repository: CameraRepository
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -47,19 +48,25 @@ class CamScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvCam.adapter = adapter
 
+        initAdapter()
+        initRepository()
         showLoading()
         dataFromServer()
     }
 
+    private fun initAdapter() {
+        binding.rvCam.adapter = adapter
+    }
+
+    private fun initRepository() {
+        repository = CamRepositoryFuncs(appDao)
+    }
+
     private fun dataFromServer() {
         lifecycleScope.launch {
-            val cameras = withContext(Dispatchers.IO) {
-                appDao.getCameras()
-            }
+            val cameras = repository.getCameras()
             if (cameras.isEmpty()) {
-                delay(5000)
 
                 retrofitService.getCameras().enqueue(object : Callback<CameraModel> {
                     override fun onResponse(
@@ -70,7 +77,7 @@ class CamScreenFragment : Fragment() {
                             val cameraModel = response.body()
                             if (cameraModel != null) {
                                 lifecycleScope.launch(Dispatchers.IO) {
-                                    appDao.setCameras(cameraModel)
+                                    repository.setCameras(cameraModel)
                                 }
                                 adapter.updateData(cameraModel.data.cameras)
                                 requireContext().showToast("Camera data loaded from server")

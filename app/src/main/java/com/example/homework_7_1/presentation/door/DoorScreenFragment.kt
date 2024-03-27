@@ -15,12 +15,13 @@ import com.example.homework_7_1.data.remote.model.DoorModel
 import com.example.homework_7_1.data.remote.retrofit.RetrofitClient
 import com.example.homework_7_1.data.remote.retrofit.RetrofitService
 import com.example.homework_7_1.databinding.FragmentDoorScreenBinding
+import com.example.homework_7_1.domain.repository.DoorRepository
+import com.example.homework_7_1.domain.repository.DoorRepositoryFuncs
 import com.example.homework_7_1.util.ItemClickListener
 import com.example.homework_7_1.util.gone
 import com.example.homework_7_1.util.showToast
 import com.example.homework_7_1.util.visible
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Call
@@ -41,6 +42,7 @@ class DoorScreenFragment : Fragment(), ItemClickListener {
     private val appDao: AppDao by lazy {
         database.appDao()
     }
+    private lateinit var repository: DoorRepository
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -50,20 +52,27 @@ class DoorScreenFragment : Fragment(), ItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvDoor.adapter = adapter
-        adapter.setSwipeListener(this)
-        adapter.swipeManager(binding.rvDoor)
+
+        initAdapter()
+        initRepository()
         showLoading()
         dataFromServer()
     }
 
+    private fun initAdapter() {
+        binding.rvDoor.adapter = adapter
+        adapter.setSwipeListener(this)
+        adapter.swipeManager(binding.rvDoor)
+    }
+
+    private fun initRepository() {
+        repository = DoorRepositoryFuncs(appDao)
+    }
+
     private fun dataFromServer() {
         lifecycleScope.launch {
-            val doors = withContext(Dispatchers.IO) {
-                appDao.getDoors()
-            }
+            val doors = repository.getDoors()
             if (doors.isEmpty()) {
-                delay(5000)
 
                 retrofitService.getDoors().enqueue(object : Callback<DoorModel> {
                     override fun onResponse(call: Call<DoorModel>, response: Response<DoorModel>) {
